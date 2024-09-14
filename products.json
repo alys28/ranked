@@ -1,0 +1,82 @@
+[
+    {
+        "product_id": 1,
+        "product_name": "Waterbottle",
+        "reviews": [
+            "Great product!",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 2,
+        "product_name": "Bluetooth Speaker",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 3,
+        "product_name": "Blender",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 4,
+        "product_name": "Sunglasses",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 5,
+        "product_name": "Shampoo",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 6,
+        "product_name": "Board Game",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 7,
+        "product_name": "Bicycle",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 8,
+        "product_name": "Cookbook",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 9,
+        "product_name": "Jeans",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    },
+    {
+        "product_id": 10,
+        "product_name": "Desk Chair",
+        "reviews": [
+            "I hate this product",
+            "Not bad, but could be improved."
+        ]
+    } 
+]
