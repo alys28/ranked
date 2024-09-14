@@ -15,7 +15,7 @@ class ReviewDataset(Dataset):
             self.deltas = json.loads(delta_data)
             delta_data.close()
     def __getitem__(self, idx):
-        return torch.tensor(self.embeddings[idx]), torch.tensor(self.deltas[idx])
+        return torch.tensor(self.embeddings[idx]["embeddings"]), torch.tensor(self.deltas[idx])
     def __len__(self):
         return len(self.embeddings)
 
