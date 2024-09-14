@@ -5,33 +5,29 @@ import torch.utils.data as DataLoader
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import matplotlib.pyplot as plt
+import os
 
 # Define the Autoencoder
 class Autoencoder(nn.Module):
-    def __init__(self, input_dim, output_dim):
+    def __init__(self, encoder_dims, decoder_dims):
         super(Autoencoder, self).__init__()
         # Encoder
         self.encoder = nn.Sequential(
-            nn.Linear(input_dim, 512),
-            nn.ReLU(True),
-            nn.Linear(512, 256),
-            nn.ReLU(True),
-            nn.Linear(256, 128),
-            nn.ReLU(True),
-            nn.Linear(128, 64),
-            nn.ReLU(True),
-            nn.Linear(64, output_dim)  # Latent space representation (3 dimensions)
+            *[
+                layer 
+                for i in range(1, len(encoder_dims) - 1)
+                for layer in (nn.Linear(encoder_dims[i-1], encoder_dims[i]), nn.ReLU())
+            ],
+            nn.Linear(encoder_dims[-2], encoder_dims[-1])
         )
         # Decoder
         self.decoder = nn.Sequential(
-            nn.Linear(output_dim, 64),
-            nn.ReLU(True),
-            nn.Linear(64, 128),
-            nn.ReLU(True),
-            nn.Linear(128, 256),
-            nn.ReLU(True),
-            nn.Linear(256, 512),
-            nn.Linear(512, input_dim),
+            *[
+                layer 
+                for i in range(1, len(decoder_dims))
+                for layer in (nn.Linear(decoder_dims[i-1], decoder_dims[i]), nn.ReLU())
+            ],
+            nn.Linear(decoder_dims[-2], decoder_dims[-1])
         )
 
     def encode(self, x):

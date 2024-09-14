@@ -14,9 +14,10 @@ class MLP(nn.Module):
         self.module = nn.Sequential(
             *[
                 layer 
-                for i in range(1, len(dims))
+                for i in range(1, len(dims)-1)
                 for layer in (nn.Linear(dims[i-1], dims[i]), nn.ReLU())
-            ]
+            ],
+            nn.Linear(dims[-2], dims[-1])
         )
 
     def forward(self, x):
@@ -29,11 +30,11 @@ output_size = 1    # Example output size (e.g., regression)
 
 
 # Example training loop
-def train(train_loader, num_epochs, save_dir, save_iter = 10, lr = 0.001):
+def train(train_loader,dims, num_epochs, save_dir, save_iter = 10, lr = 0.001):
     '''
     Training loop for the MLP, which includes a save_dir capability
     '''
-    model = MLP(input_size, hidden_size, output_size)
+    model = MLP(dims)
     model.train()
     # Define the loss function and optimizer
     criterion = nn.MSELoss()  # Mean Squared Error for regression
