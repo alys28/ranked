@@ -1,4 +1,4 @@
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer # type: ignore
 import json
 json_path = 'products.json'
 
