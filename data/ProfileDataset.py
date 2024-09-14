@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader
 import json
 
 
-class GalaxyDataset(Dataset):
+class ProfileDataset(Dataset):
     def __init__(self, json_file):
         '''
         loads data from json_file, convert the entries into a 2D array

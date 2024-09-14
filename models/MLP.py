@@ -29,7 +29,7 @@ output_size = 1    # Example output size (e.g., regression)
 
 
 # Example training loop
-def train(train_loader, save_dir, save_iter = 10, num_epochs=100):
+def train(train_loader, num_epochs, save_dir, save_iter = 10, lr = 0.001):
     '''
     Training loop for the MLP, which includes a save_dir capability
     '''
@@ -37,7 +37,7 @@ def train(train_loader, save_dir, save_iter = 10, num_epochs=100):
     model.train()
     # Define the loss function and optimizer
     criterion = nn.MSELoss()  # Mean Squared Error for regression
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=lr)
     for epoch in range(num_epochs):
         for data in train_loader:
             # Forward pass

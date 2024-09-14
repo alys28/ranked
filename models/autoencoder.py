@@ -42,7 +42,7 @@ class Autoencoder(nn.Module):
         return x
 
 
-def train(dataloader, num_epochs, lr=0.001):
+def train(dataloader, num_epochs, save_dir, save_iter = 10, lr=0.001):
     train_loader = dataloader
     # Initialize the model, loss function, and optimizer
     model = Autoencoder()
@@ -63,5 +63,8 @@ def train(dataloader, num_epochs, lr=0.001):
             optimizer.step()
         
         print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
-
-    # Plot original and reconstructed images
+        
+        if (epoch + 1) % save_iter == 0:
+            save_path = os.path.join(save_dir, f'MLP_epoch_{epoch+1}.pth')
+            torch.save(model.state_dict(), save_path)
+            print(f'Model saved at epoch {epoch+1} to {save_path}')
