@@ -163,4 +163,4 @@ def generate_resulting_profile(start, end):
                 print('Created updated profile for ' + str(profile_pos) + ' with review ' + str(review_pos))
 
 
-generate_resulting_profile()
+generate_resulting_profile(0, 1000)
