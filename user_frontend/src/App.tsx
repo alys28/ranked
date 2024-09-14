@@ -1,13 +1,13 @@
-import { Chat } from "@/Chat/Chat";
-import { ChatIntro } from "@/Chat/ChatIntro";
 import { Layout } from "@/Layout";
 import { SignInForm } from "@/SignInForm";
 import { UserMenu } from "@/components/UserMenu";
 import { Authenticated, Unauthenticated, useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
+import SearchBar from "./components/SearchBar";
 
 export default function App() {
   const user = useQuery(api.users.viewer);
+
   return (
     <Layout
       menu={
@@ -16,15 +16,17 @@ export default function App() {
         </Authenticated>
       }
     >
-      <>
+      <div style={{ display: 'flex' }}>
         <Authenticated>
-          <ChatIntro />
-          <Chat viewer={(user ?? {})._id!} />
+          <SearchBar />
         </Authenticated>
-        <Unauthenticated>
-          <SignInForm />
-        </Unauthenticated>
-      </>
+  
+        <main style={{ flex: 1, padding: '20px' }}>
+          <Unauthenticated>
+            <SignInForm />
+          </Unauthenticated>
+        </main>
+      </div>
     </Layout>
   );
 }

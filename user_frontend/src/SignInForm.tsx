@@ -1,91 +1,58 @@
 import { SignInMethodDivider } from "@/components/SignInMethodDivider";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
-import { useAuthActions } from "@convex-dev/auth/react";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { SignInWithGoogle } from "@/SignInWithGoogle";
+import { SignInFormPassword } from "./SignInFormPassword";
 
 export function SignInForm() {
-  const [step, setStep] = useState<"signIn" | "linkSent">("signIn");
+  const [step, setStep] = useState<"signIn" | "signUp" | "linkSent">("signIn");
 
   return (
-    <div className="container my-auto">
-      <div className="max-w-[384px] mx-auto flex flex-col my-auto gap-4 pb-8">
-        {step === "signIn" ? (
-          <>
-            <h2 className="font-semibold text-2xl tracking-tight">
-              Sign in or create an account
-            </h2>
-            <SignInWithGitHub />
-            <SignInWithGoogle />
-            <SignInMethodDivider />
-            <SignInWithMagicLink handleLinkSent={() => setStep("linkSent")} />
-          </>
-        ) : (
-          <>
-            <h2 className="font-semibold text-2xl tracking-tight">
-              Check your email
-            </h2>
-            <p>A sign-in link has been sent to your email address.</p>
-            <Button
-              className="p-0 self-start"
-              variant="link"
-              onClick={() => setStep("signIn")}
-            >
-              Cancel
-            </Button>
-          </>
-        )}
+    <div className="mt-8 flex items-center justify-center">
+      <div className=" bg-white rounded-lg shadow-md p-8">
+        {/* Product Title Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">
+            Welcome to ranked
+          </h1>
+          <p className="text-sm text-gray-500 mt-2">
+            Your gateway to a better consumerism experience
+          </p>
+        </div>
+
+        {/* Sign In/Sign Up Form */}
+        <div className="flex flex-col gap-6">
+          {step === "signIn" || step === "signUp" ? (
+            <>
+              <h2 className="font-semibold text-lg text-center text-gray-800">
+                {step === "signIn"
+                  ? "Sign in or create an account"
+                  : "Create a new account"}
+              </h2>
+              <SignInWithGoogle />
+              <SignInMethodDivider />
+              <SignInFormPassword />
+            </>
+          ) : (
+            <>
+              <h2 className="font-semibold text-xl text-gray-800">
+                Check your email
+              </h2>
+              <p className="text-gray-600">
+                A sign-in link has been sent to your email address. Please
+                check your inbox and follow the link to continue.
+              </p>
+              <Button
+                className="mt-4 text-blue-500 underline self-start"
+                variant="link"
+                onClick={() => setStep("signIn")}
+              >
+                Cancel
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
-  );
-}
-
-export function SignInWithGitHub() {
-  const { signIn } = useAuthActions();
-  return (
-    <Button
-      className="flex-1"
-      variant="outline"
-      type="button"
-      onClick={() => void signIn("github")}
-    >
-      <GitHubLogoIcon className="mr-2 h-4 w-4" /> GitHub
-    </Button>
-  );
-}
-
-function SignInWithMagicLink({
-  handleLinkSent,
-}: {
-  handleLinkSent: () => void;
-}) {
-  const { signIn } = useAuthActions();
-  const { toast } = useToast();
-  return (
-    <form
-      className="flex flex-col"
-      onSubmit={(event) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        signIn("resend", formData)
-          .then(handleLinkSent)
-          .catch((error) => {
-            console.error(error);
-            toast({
-              title: "Could not send sign-in link",
-              variant: "destructive",
-            });
-          });
-      }}
-    >
-      <label htmlFor="email">Email</label>
-      <Input name="email" id="email" className="mb-4" autoComplete="email" />
-      <Button type="submit">Send sign-in link</Button>
-      <Toaster />
-    </form>
   );
 }
