@@ -19,48 +19,43 @@
         "product_id": 3,
         "product_name": "Blender",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
+            "I LOVE this product"
         ]
     },
     {
         "product_id": 4,
         "product_name": "Sunglasses",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
+            "Not bad"
         ]
     },
     {
         "product_id": 5,
         "product_name": "Shampoo",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
+            "I absolutely hate this product. it broke."
         ]
     },
     {
         "product_id": 6,
         "product_name": "Board Game",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
+            "I hate this product"
         ]
     },
     {
         "product_id": 7,
         "product_name": "Bicycle",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
+            "I didn't like the bike"
         ]
     },
     {
         "product_id": 8,
         "product_name": "Cookbook",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
+            "Not bad, but could be improved.",
+            "I really liked it"
         ]
     },
     {

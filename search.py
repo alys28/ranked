@@ -16,17 +16,16 @@ def iterate():
         data = json.load(file)
     
     for product in data:
-        print(f"Product ID: {product['product_id']}")
         reviews = product['reviews']
         scores = []
         for review in reviews:
             scores.append(get_sentiment_score(review))
 
         # {id:sentiment score}
-        product_dict[product['id']] = calculate_weighted_average(scores)
+        product_dict[product['product_id']] = calculate_weighted_average(scores)
     
     # sort based on highest score (positive) to lowest (negative)
-    product_dict = dict(sorted(data.items(), key=lambda item: item[1], reverse=True))
+    product_dict = dict(sorted(product_dict.items(), key=lambda item: item[1], reverse=True))
     return product_dict
 
 def calculate_weighted_average(scores):
@@ -41,8 +40,8 @@ def main():
     product_dict = iterate()
 
     for id in product_dict:
-        print(id)  
+        print(product_dict)
 
 if __name__ == "__main__":
-    iterate()
+    main()
     
