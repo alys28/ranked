@@ -4,7 +4,6 @@ import torch.optim as optim
 import torch.utils.data as DataLoader
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-import matplotlib.pyplot as plt
 import os
 
 # Define the Autoencoder
@@ -30,14 +29,14 @@ class Autoencoder(nn.Module):
             nn.Linear(decoder_dims[-2], decoder_dims[-1])
         )
     def decode(self, x):
-        return self.decode(x)
+        return self.decoder(x)
     def encode(self, x):
         return self.encoder(x)
     def forward(self, x):
         x = self.encoder(x)
         x = self.decoder(x)
         return x
-
+    
 
 def train(dataloader, encoder_dims, decoder_dims, num_epochs, save_dir, save_iter = 10, lr=0.001):
     train_loader = dataloader

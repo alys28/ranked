@@ -1,9 +1,13 @@
 autoencoder:
   dims: [128, 64, 32]
   batch_size: 32
-  num_epochs: 50
+  batch_size: 64
+  num_epochs: 100
 
-model:
-  dims: [512, 256, 128]
+MLP:
+  encoder_dims: [512, 256, 128]
+  decoder_dims: [512, 256, 128]
+  delta_files: ""
+  embeddings_file: ""
   batch_size: 64
   num_epochs: 100
