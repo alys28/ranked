@@ -27,6 +27,3 @@ if __name__ == "__main__":
         reviews.append({"embedding": entry, "sentence": entry})
         with open('reviews_embedded.json', 'w') as json_file:
             json.dump(reviews, json_file, indent=4)
-
-
-
