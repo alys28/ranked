@@ -1,12 +1,12 @@
 # Profile:
 ## Asked on Sign Up
-Skin Tone: {integer, 1-5 (very fair to very dark)}//
-Hair Color: {integer, 1-6 (blonde, brown, red, black, gray, other)}//
-Eye Color: {integer, 1-6 (blue, green, hazel, brown, gray, other)}//
-Occupation: {integer, 1-20 (categories, refer to Occupation list below)}//
-Marital Status: {integer, 1-5 (categories, refer to Marital Status list below)}//
-Race: {integer, 1-6 (categories, e.g., White, Black, Asian, etc.)}//
-Ethnicity: {integer, 1-12 (categories, e.g., Hispanic, Non-Hispanic, etc.)}//
+Skin Tone: {integer, 1-5 (very fair to very dark)}
+Hair Color: {integer, 1-6 (blonde, brown, red, black, gray, other)}
+Eye Color: {integer, 1-6 (blue, green, hazel, brown, gray, other)}
+Occupation: {integer, 1-20 (categories, refer to Occupation list below)}
+Marital Status: {integer, 1-5 (categories, refer to Marital Status list below)}
+Race: {integer, 1-6 (categories, e.g., White, Black, Asian, etc.)}
+Ethnicity: {integer, 1-12 (categories, e.g., Hispanic, Non-Hispanic, etc.)}
 
 ## All Profile Attributes
 Height: {integer, 1-100}
