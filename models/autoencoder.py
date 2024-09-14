@@ -41,25 +41,27 @@ class Autoencoder(nn.Module):
         x = self.decoder(x)
         return x
 
-# Load MNIST dataset
-train_loader = None
-# Initialize the model, loss function, and optimizer
-model = Autoencoder()
-criterion = nn.MSELoss()  # Mean Squared Error Loss for reconstruction
-optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# Training the Autoencoder
-num_epochs = 20
-for epoch in range(num_epochs):
-    for data in train_loader:
-        profile_input = data        
-        # Forward pass
-        output = model(profile_input)
-        loss = criterion(output, profile_input)
+def train(dataloader, num_epochs, lr=0.001):
+    train_loader = dataloader
+    # Initialize the model, loss function, and optimizer
+    model = Autoencoder()
+    criterion = nn.MSELoss()  # Mean Squared Error Loss for reconstruction
+    optimizer = optim.Adam(model.parameters(), lr=lr)
+
+    # Training the Autoencoder
+    for epoch in range(num_epochs):
+        for data in train_loader:
+            profile_input = data        
+            # Forward pass
+            output = model(profile_input)
+            loss = criterion(output, profile_input)
+            
+            # Backward pass
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
         
-        # Backward pass
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-    
-    print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+        print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+
+    # Plot original and reconstructed images
