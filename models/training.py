@@ -25,10 +25,10 @@ if __name__ == "__main__":
     if args.model == "autoencoder":
         config = config["autoencoder"]
         dataset = ProfileDataset(json_file=config["json_file"])
-        dataloader = DataLoader(dataset, batch_size=config["batch_size"])
-        autoencoder.train(dataloader, num_epochs=100, save_dir=config["save_dir"], save_iter = 10, lr=0.001)
+        dataloader = DataLoader(dataset, batch_size=config["batch_size"], shuffle=True)
+        autoencoder.train(dataloader, encoder_dims=config["encoder_dims"], decoder_dims=config["decoder_dims"], num_epochs=100, save_dir=config["save_dir"], save_iter = 10, lr=0.001)
     else:
         config = config["MLP"]
         dataset = ReviewDataset()
-        dataloader = DataLoader(dataset, batch_size=config["batch_size"])
-        MLP.train(dataloader, num_epochs=100, save_dir=config["save_dir"], save_iter = 10, lr=0.001)
+        dataloader = DataLoader(dataset, batch_size=config["batch_size"], shuffle=True)
+        MLP.train(dataloader, dims=config["dims"], num_epochs=100, save_dir=config["save_dir"], save_iter = 10, lr=0.001)

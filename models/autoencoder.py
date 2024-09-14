@@ -29,7 +29,8 @@ class Autoencoder(nn.Module):
             ],
             nn.Linear(decoder_dims[-2], decoder_dims[-1])
         )
-
+    def decode(self, x):
+        return self.decode(x)
     def encode(self, x):
         return self.encoder(x)
     def forward(self, x):
@@ -38,10 +39,10 @@ class Autoencoder(nn.Module):
         return x
 
 
-def train(dataloader, num_epochs, save_dir, save_iter = 10, lr=0.001):
+def train(dataloader, encoder_dims, decoder_dims, num_epochs, save_dir, save_iter = 10, lr=0.001):
     train_loader = dataloader
     # Initialize the model, loss function, and optimizer
-    model = Autoencoder()
+    model = Autoencoder(encoder_dims, decoder_dims)
     criterion = nn.MSELoss()  # Mean Squared Error Loss for reconstruction
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
