@@ -113,7 +113,7 @@ def generate_reviews():
         print('Created review ' + str(ele))
 
 
-def generate_resulting_profile():
+def generate_resulting_profile(start, end):
     client = Groq(
         api_key=os.getenv("GROQ_API_KEY"),
     )
@@ -128,7 +128,7 @@ def generate_resulting_profile():
     except FileNotFoundError:
         reviews = []
 
-    for profile_pos in range(0, 1000):
+    for profile_pos in range(start, end):
         profile = profiles[profile_pos]
         for review_pos in range(len(reviews)):
             try:
@@ -163,5 +163,4 @@ def generate_resulting_profile():
                 print('Created updated profile for ' + str(profile_pos) + ' with review ' + str(review_pos))
 
 
-# generate_profiles()
-generate_reviews()
+generate_resulting_profile()
