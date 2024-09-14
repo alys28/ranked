@@ -184,7 +184,7 @@ Ethnicity: {integer, 1-12 (categories, e.g., Hispanic, Non-Hispanic, etc.)}
   "Physical Health": null,
   "Mental Health": null,
   "Chronic Conditions": null,
-  "Dis": null,
+  "Disabilities": null,
   "Personality Type": null,
   "Learning Style": null,
   "Creativity": null,
