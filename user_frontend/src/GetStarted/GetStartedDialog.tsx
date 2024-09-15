@@ -1,6 +1,6 @@
 import { ConvexLogo } from "@/GetStarted/ConvexLogo";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogClose,
@@ -19,7 +19,7 @@ export function GetStartedDialog({ children }: { children: ReactNode }) {
       <DialogContent className="max-w-2xl max-h-[calc(100vh-8rem)] grid-rows-[1fr_auto]">
         <DialogHeader>
           <DialogTitle className="flex items-baseline gap-2">
-            Ranked powered by <ConvexLogo width={69} height={11} />
+            RUNK powered by <ConvexLogo width={69} height={11} />
           </DialogTitle>
         </DialogHeader>
         <GetStartedContent />
@@ -43,6 +43,14 @@ function GetStartedContent() {
     race: "",
     ethnicity: "",
   });
+  const [showProfile, setShowProfile] = useState(false);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("userFormData");
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { id, value } = event.target;
@@ -59,11 +67,40 @@ function GetStartedContent() {
     // Save the JSON data to localStorage
     localStorage.setItem("userFormData", jsonData);
 
-    // Optionally, alert or log to indicate success
-    alert("Form data has been saved locally.");
+    // Save the data as a .txt file
+    const blob = new Blob([jsonData], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "user_profile.txt";
+    link.click();
+    URL.revokeObjectURL(url);
+
+    alert("Form data has been saved locally and as a .txt file.");
     console.log("Saved form data:", jsonData);
   };
 
+  const toggleProfile = () => {
+    setShowProfile(!showProfile);
+  };
+
+  if (showProfile) {
+    return (
+      <div className="overflow-y-auto p-6 flex flex-col items-center">
+        <h2 className="text-2xl font-bold mb-4">User Profile</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 w-full max-w-md">
+          {Object.entries(formData).map(([key, value]) => (
+            <p key={key} className="mb-2">
+              <span className="font-semibold">{key.charAt(0).toUpperCase() + key.slice(1)}:</span> {value || "Not specified"}
+            </p>
+          ))}
+        </div>
+        <Button onClick={toggleProfile} className="mt-4">
+          Edit Profile
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="overflow-y-auto p-6 flex justify-center">
       <div className="w-full max-w-2xl">
@@ -232,9 +269,12 @@ function GetStartedContent() {
               </select>
             </div>
 
-            <div className="flex justify-end">
-              <Button type="submit" className="w-full mt-4">
+            <div className="flex justify-end space-x-4">
+              <Button type="submit" className="w-1/2 mt-4">
                 Submit
+              </Button>
+              <Button type="button" onClick={toggleProfile} className="w-1/2 mt-4" variant="outline">
+                View Profile
               </Button>
             </div>
           </form>

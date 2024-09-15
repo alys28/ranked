@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { GetStartedDialog } from "@/GetStarted/GetStartedDialog";
+import { RetailerDashboard } from "@/Dashboard/Dashboard";
 
 
 export function Layout({
@@ -15,7 +16,7 @@ export function Layout({
         <nav className="container w-full justify-between flex flex-row items-center gap-6">
           <div className="flex items-center gap-6 md:gap-10">
             <a href="/">
-              <h1 className="text-base font-bold">RANKED</h1>
+              <h1 className="text-base font-bold">RUNK</h1>
             </a>
             <div className="flex items-center gap-4 text-sm">
               <GetStartedDialog>
@@ -23,6 +24,11 @@ export function Layout({
                   create your profile
                 </button>
               </GetStartedDialog>
+              <RetailerDashboard>
+                <button className="text-muted-foreground transition-colors hover:text-foreground">
+                  retailer dashboard
+                </button>
+              </RetailerDashboard>
             </div>
           </div>
           {menu}

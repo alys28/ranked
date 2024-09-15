@@ -13,10 +13,10 @@ export function SignInForm() {
         {/* Product Title Section */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">
-            Welcome to ranked
+            Welcome to RUNK
           </h1>
           <p className="text-sm text-gray-500 mt-2">
-            Your gateway to a better consumer experience
+            Get the right review for you
           </p>
         </div>
 

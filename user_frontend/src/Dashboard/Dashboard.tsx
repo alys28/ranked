@@ -1,101 +1,92 @@
-// src/components/Dashboard.tsx
-import React from 'react';
-import { PieChart, Pie, Tooltip, Cell, LineChart, Line, CartesianGrid, XAxis, YAxis, BarChart, Bar, Legend } from 'recharts';
-import { Container, Typography, Paper, Grid } from '@mui/material';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
-// Sample data for visualizations
-const pieData = [
-  { name: 'Product A', value: 400 },
-  { name: 'Product B', value: 300 },
-  { name: 'Product C', value: 300 },
-  { name: 'Product D', value: 200 },
+const ageData = [
+  { name: '18-24', value: 30 },
+  { name: '25-34', value: 45 },
+  { name: '35-44', value: 20 },
+  { name: '45+', value: 5 },
 ];
 
-const lineData = [
-  { month: 'Jan', sales: 4000 },
-  { month: 'Feb', sales: 3000 },
-  { month: 'Mar', sales: 2000 },
-  { month: 'Apr', sales: 2780 },
-  { month: 'May', sales: 1890 },
-  { month: 'Jun', sales: 2390 },
-  { month: 'Jul', sales: 3490 },
+const occupationData = [
+  { name: 'Manager', value: 20 },
+  { name: 'Engineer', value: 30 },
+  { name: 'Designer', value: 15 },
+  { name: 'Teacher', value: 10 },
+  { name: 'Other', value: 25 },
 ];
 
-const barData = [
-  { product: 'Product A', sales: 2400 },
-  { product: 'Product B', sales: 1398 },
-  { product: 'Product C', sales: 9800 },
-  { product: 'Product D', sales: 3908 },
+const personalityData = [
+  { name: 'ISTJ', value: 15 },
+  { name: 'ENFP', value: 25 },
+  { name: 'INTJ', value: 20 },
+  { name: 'ESFJ', value: 18 },
+  { name: 'Other', value: 22 },
 ];
 
-const Dashboard: React.FC = () => {
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#3c493f', '#b3bfb8'];
+
+export function RetailerDashboard({ children }) {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Retailer Dashboard
-      </Typography>
-      <Grid container spacing={4}>
-        {/* Pie Chart */}
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <Typography variant="h6" gutterBottom>
-              Product Distribution
-            </Typography>
-            <PieChart width={400} height={400}>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={150}
-                fill="#8884d8"
-                label
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={['#8884d8', '#ff7300', '#00c49f', '#ffbb28'][index]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </Paper>
-        </Grid>
-
-        {/* Line Chart */}
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <Typography variant="h6" gutterBottom>
-              Monthly Sales
-            </Typography>
-            <LineChart width={500} height={300} data={lineData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="sales" stroke="#8884d8" />
-            </LineChart>
-          </Paper>
-        </Grid>
-
-        {/* Bar Chart */}
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <Typography variant="h6" gutterBottom>
-              Product Sales
-            </Typography>
-            <BarChart width={500} height={300} data={barData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="product" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="sales" fill="#8884d8" />
-            </BarChart>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Container>
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="max-w-5xl max-h-[calc(100vh-8rem)] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold mb-4">Product Popularity Dashboard</DialogTitle>
+        </DialogHeader>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Age Distribution</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={ageData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Occupation Distribution</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={occupationData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                >
+                  {occupationData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Personality Type Distribution</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={personalityData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#82ca9d" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
-};
+}
 
-export default Dashboard;
+export default RetailerDashboard;
