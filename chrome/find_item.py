@@ -1,4 +1,4 @@
-import json
+import json, requests
 
 def in_json(name, json_data):
     for json_item in json_data:
@@ -25,6 +25,9 @@ def check_id(name):
                 "name": name
             }
             json_data.append(new_entry)
+            url = 'https://runk-backend.vercel.app/add_product'
+            headers = {'Content-Type': 'application/json'}
+            response = requests.post(url, json=new_entry, headers=headers)
             
             with open(file_path, 'w') as file:
                 json.dump(json_data, file, indent=4)

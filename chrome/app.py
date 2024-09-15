@@ -1,6 +1,6 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from id import check_id
+from flask import Flask, request, jsonify # type: ignore
+from flask_cors import CORS # type: ignore
+from chrome.find_item import check_id
 import urllib.parse
 
 app = Flask(__name__)
@@ -26,6 +26,7 @@ def get_reviews():
         reviews = check_id(link)
         if reviews=="does not exist":
             reviews = None
+            
         return jsonify({"message": reviews}), 200
     
     except Exception as e:

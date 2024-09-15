@@ -3,13 +3,23 @@
 <head>
   <title>Ranked - User Reviews</title>
   <style>
+    :root {
+      --primary-btn: #3C493F;
+      --secondary-btn: #B3BFB8;
+    }
+        
+
+
     body {
-      width: 320px;
+      width: 400px;
       font-family: Arial, sans-serif;
-      padding: 10px;
+      padding: 20px;
       margin: 0;
       background-color: #f4f4f4;
       box-sizing: border-box;
+    }
+    .review-author{
+      font-weight: bold;
     }
     header {
       display: flex;
@@ -19,9 +29,9 @@
       margin-bottom: 10px;
     }
     .logo {
-      width: 40px;
-      height: 40px;
-      background-color: #007bff;
+      width: 30px;
+      height: 30px;
+      background-color:var(--primary-btn);
       color: #fff;
       display: flex;
       align-items: center;
@@ -53,33 +63,48 @@
       border-bottom: none;
     }
     .review-author {
-      font-weight: bold;
+    display: flex;
+    align-items: center;
     }
+
+  .profile-circle {
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    font-size: 10px;
+  }
     .review-content {
-      margin-top: 5px;
+      margin-top: 8px;
     }
     #show-reviews-button, #submit-review {
       display: block;
       width: 100%;
-      padding: 10px;
+      padding: 20px;
       font-size: 16px;
       color: #fff;
-      background-color: #007bff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
+      background-color: var(--primary-btn);
     }
-    #show-reviews-button:hover {
-      background-color: #0056b3;
+    #submit-review {
+      margin-top: 20px;
     }
+
     #review-form {
       display: none; /* Initially hidden */
       background: #fff;
       border: 1px solid #ddd;
       padding: 10px;
-      border-radius: 5px;
-      margin-top: 10px;
+      border-radius: 0 0 5px 5px;
+      margin-top: -5px;
     }
     #review-form textarea {
       width: calc(100% - 22px); /* Full width minus padding */
@@ -94,23 +119,27 @@
       padding: 10px;
       font-size: 16px;
       color: #fff;
-      background-color: #28a745;
+      background-color: var(--secondary-btn);
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-    #review-form button:hover {
-      background-color: #218838;
-    }
+   
 
     #no-reviews{
       background:white;
       padding:10px;
       border: 1px solid #ddd;
-      border-radius: 5px;
+      border-radius: 0 0 5px 5px;
       font-weight: bold;
       font-size:15px;
       display:none;
+      margin-top: -3px;
+    }
+    header{
+      display:flex;
+      flex-direction:row;
+      padding:10px 0;
     }
 
     body{
@@ -120,8 +149,11 @@
 </head>
 <body>
   <header>
-    <div class="logo">R</div>
-    <h1>Ranked</h1>
+    <div id="col1" style="flex: 0 0 70%;"><h1>Welcome back, Pearl</h1></div>
+    <div id="col2" style="flex: 0 0 30%;display:flex;flex-direction:row;justify-content: flex-end;align-items: center;">
+      <div class="logo">R</div>
+      <h1>Runk</h1>
+    </div>
   </header>
   <button id="submit-review">Submit a Review</button>
   <div id="review-form">
@@ -130,48 +162,9 @@
   </div>
   
   <button id="show-reviews-button">Show Reviews</button>
-  <div class="reviews" id="reviews-container">
-    <div class="review" id="review1">
-      <div class="review-author" id="review-author1">User 1</div>
-      <div class="review-content" id="review-content1">This is an example review. It provides feedback on the extension.</div>
-    </div>
-    <div class="review" id="review2">
-      <div class="review-author" id="review-author2">User 2</div>
-      <div class="review-content" id="review-content2">Another example review. It contains user opinions and experiences.</div>
-    </div>
-    <div class="review" id="review3">
-      <div class="review-author" id="review-author3">User 3</div>
-      <div class="review-content" id="review-content3">Great extension! It works as expected and is very useful.</div>
-    </div>
-    <div class="review" id="review4">
-      <div class="review-author" id="review-author4">User 4</div>
-      <div class="review-content" id="review-content4">I love this extension. It makes my work easier and more efficient.</div>
-    </div>
-    <div class="review" id="review5">
-      <div class="review-author" id="review-author5">User 5</div>
-      <div class="review-content" id="review-content5">Good functionality, but the UI could use some improvements.</div>
-    </div>
-    <div class="review" id="review6">
-      <div class="review-author" id="review-author6">User 6</div>
-      <div class="review-content" id="review-content6">It's okay. I had some issues with performance on certain pages.</div>
-    </div>
-    <div class="review" id="review7">
-      <div class="review-author" id="review-author7">User 7</div>
-      <div class="review-content" id="review-content7">Useful tool! I find it very handy for my daily tasks.</div>
-    </div>
-    <div class="review" id="review8">
-      <div class="review-author" id="review-author8">User 8</div>
-      <div class="review-content" id="review-content8">The extension works well, but it occasionally crashes.</div>
-    </div>
-    <div class="review" id="review9">
-      <div class="review-author" id="review-author9">User 9</div>
-      <div class="review-content" id="review-content9">Solid extension with great features. Worth installing.</div>
-    </div>
-    <div class="review" id="review10">
-      <div class="review-author" id="review-author10">User 10</div>
-      <div class="review-content" id="review-content10">Excellent extension. It meets all my needs and more!</div>
-    </div>
-  </div>
+  <div class="reviews" id="reviews-container" style="border-radius: 0 0 5px 5px;margin-top:-3px;"></div>
+
+  
   <div id = "no-reviews">No Reviews Available</div>
   <script src="popup.js"></script>
 </body>

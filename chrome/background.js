@@ -4,6 +4,6 @@ chrome.action.onClicked.addListener(async () => {
     currentWindow: true,
   });
   if (activeTab) {
-    console.log(`Current URL: ${activeTab.url}`); //where URL is
+    console.log(`Current URL: ${activeTab.url}`);
   }
 });
