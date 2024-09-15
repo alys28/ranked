@@ -1,77 +1,116 @@
 [
     {
         "product_id": 1,
-        "product_name": "Waterbottle",
         "reviews": [
-            "Great product!",
-            "Not bad, but could be improved."
+            {
+                "review": "Great product!",
+                "profile_score": 1.0
+            },
+            {
+                "review": "Not bad, but could be improved.",
+                "profile_score": 0.7
+            }
         ]
     },
     {
         "product_id": 2,
-        "product_name": "Bluetooth Speaker",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
+            {
+                "review": "I hate this product",
+                "profile_score": 1.0
+            },
+            {
+                "review": "Not bad, but could be improved.",
+                "profile_score": 0.7
+            }
         ]
     },
     {
         "product_id": 3,
-        "product_name": "Blender",
         "reviews": [
-            "I LOVE this product"
+            {
+                "review": "I LOVE this product",
+                "profile_score": 0.2
+            }  
         ]
     },
     {
         "product_id": 4,
-        "product_name": "Sunglasses",
         "reviews": [
-            "Not bad"
+            {
+                "review": "Not bad",
+                "profile_score": 1.0
+            }
         ]
     },
     {
         "product_id": 5,
-        "product_name": "Shampoo",
         "reviews": [
-            "I absolutely hate this product. it broke."
+            {
+                "review": "I absolutely hate this product. it broke.",
+                "profile_score": 0.01
+            }
+            
         ]
     },
     {
         "product_id": 6,
-        "product_name": "Board Game",
         "reviews": [
-            "I hate this product"
+            {
+                "review": "I hate this product",
+                "profile_score": 0.9
+            } 
         ]
     },
     {
         "product_id": 7,
-        "product_name": "Bicycle",
         "reviews": [
-            "I didn't like the bike"
+        {
+            "review": "I didn't like the bike ",
+            "profile_score": 0.7
+        }
         ]
     },
     {
         "product_id": 8,
         "product_name": "Cookbook",
         "reviews": [
-            "Not bad, but could be improved.",
-            "I really liked it"
-        ]
+        {
+            "review": "Not bad, but could be improved.",
+            "profile_score": 0.2
+        },
+        {
+            "review":  "I really liked it",
+            "profile_score": 0.6
+        }
+        ]   
     },
     {
         "product_id": 9,
         "product_name": "Jeans",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
-        ]
+        {
+            "review": "I hate this product",
+            "profile_score": 0.1
+        },
+        {
+            "review":  "Not bad, but could be improved.",
+            "profile_score": 0.6
+        }
+        ]   
     },
     {
         "product_id": 10,
         "product_name": "Desk Chair",
         "reviews": [
-            "I hate this product",
-            "Not bad, but could be improved."
-        ]
+            {
+                "review": "I hate this product",
+                "profile_score": 0.08
+            },
+            {
+                "review":  "I didn't like it at all. Do not recommend.",
+                "profile_score": 0.3
+            }
+            ]   
     } 
 ]
