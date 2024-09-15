@@ -63,23 +63,29 @@ function GetStartedContent() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const jsonData = JSON.stringify(formData, null, 2);
-
+  
     // Save the JSON data to localStorage
     localStorage.setItem("userFormData", jsonData);
-
-    // Save the data as a .txt file
-    const blob = new Blob([jsonData], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "user_profile.txt";
-    link.click();
-    URL.revokeObjectURL(url);
-
-    alert("Form data has been saved locally and as a .txt file.");
-    console.log("Saved form data:", jsonData);
+  
+    // Save each form field in a separate cookie
+    Object.entries(formData).forEach(([key, value]) => {
+      document.cookie = `${key}=${encodeURIComponent(value)}; path=/; max-age=31536000;`;
+    });
+  
+    // You can remove the file download part if you don't need it
+    // const blob = new Blob([jsonData], { type: "text/plain" });
+    // const url = URL.createObjectURL(blob);
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.download = "user_profile.txt";
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    // URL.revokeObjectURL(url);
+  
+    console.log("Form data saved in localStorage and cookies:", jsonData);
   };
-
+  
   const toggleProfile = () => {
     setShowProfile(!showProfile);
   };
@@ -141,7 +147,7 @@ function GetStartedContent() {
                 className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-700"
               >
                 <option value="">Select Occupation</option>
-                <option value="Manager">Manager</option>
+                <option value="Manager">Student</option>
                 <option value="Executive">Executive</option>
                 <option value="Entrepreneur">Entrepreneur</option>
                 <option value="Financial Analyst">Financial Analyst</option>

@@ -37,7 +37,7 @@ export function Layout({
       <main className="flex grow flex-col overflow-hidden">{children}</main>
       <footer className="border-t hidden sm:block">
         <div className="container py-4 text-sm leading-loose">
-          Built with ❤️ at{" "}
+          Built with ❤️ {" "}
           <FooterLink href="https://www.convex.dev/">Convex</FooterLink>.
           Powered by Convex,{" "}
           <FooterLink href="https://vitejs.dev">Vite</FooterLink>,{" "}

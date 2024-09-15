@@ -5,7 +5,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { Authenticated, Unauthenticated, useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
 import SearchBar from "./components/SearchBar";
-import { DownloadUserEmail } from './components/DownloadUserEmail';
+import { SaveUserEmailToCookie } from './components/DownloadUserEmail';
 
 export default function App() {
   const user = useQuery(api.users.viewer);
@@ -19,7 +19,7 @@ export default function App() {
           </Authenticated>
         }
       >
-          <DownloadUserEmail />
+          <SaveUserEmailToCookie />
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
             <Authenticated>

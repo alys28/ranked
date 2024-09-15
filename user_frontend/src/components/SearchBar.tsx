@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -17,6 +17,7 @@ interface Product {
   reviews: Review[];
 }
 
+// Initial products array
 const products = [
   {
     id: 1, name: 'FUJEAK Men Walking Shoes', description: 'Casual Breathable Running Shoes Sport Athletic Sneakers Gym Tennis Slip On Comfortable Lightweight Shoes for Jogging Mesh',
@@ -1132,15 +1133,22 @@ const products = [
   }
 ];
 
-export { products };
-const categories = Array.from(new Set(products.map(product => product.category)));
+// New product order from JSON
+const productOrder = [12, 9, 32, 17, 6, 21, 16, 25, 8, 4, 1, 13, 38, 29, 47, 26, 22, 30, 27, 36, 39, 15, 11, 44, 33, 18, 14, 7, 34, 31, 10, 28, 35, 23, 2, 48, 49, 45, 42, 20, 5, 43, 24, 19, 41, 40, 37, 46, 3, 50];
+
+
+const reorderProducts = (productOrder: number[], products: Product[]) => {
+  const orderedProducts = productOrder.map(id => products.find(product => product.id === id)).filter(Boolean) as Product[];
+  return orderedProducts;
+};
 
 const SearchAndProducts: React.FC = () => {
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [orderedProducts, setOrderedProducts] = useState<Product[]>(products); // Initially use default product order
 
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = orderedProducts.filter(product => {
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase());
     return matchesCategory && matchesQuery;
@@ -1152,6 +1160,11 @@ const SearchAndProducts: React.FC = () => {
 
   const handleBackClick = () => {
     setSelectedProduct(null);
+  };
+
+  // Function to trigger reordering when the refresh button is clicked
+  const handleRefreshClick = () => {
+    setOrderedProducts(reorderProducts(productOrder, products));
   };
 
   return (
@@ -1168,10 +1181,10 @@ const SearchAndProducts: React.FC = () => {
             <CardContent className="space-y-6">
               <div className="flex flex-col md:flex-row items-start">
                 <div className="w-full md:w-1/2 h-48 relative">
-                  <img 
-                    src={selectedProduct.photoUrl} 
-                    alt={selectedProduct.name} 
-                    className="absolute w-full h-full object-contain rounded-lg" 
+                  <img
+                    src={selectedProduct.photoUrl}
+                    alt={selectedProduct.name}
+                    className="absolute w-full h-full object-contain rounded-lg"
                   />
                 </div>
                 <div className="mt-4 md:mt-0 md:ml-6 flex-1">
@@ -1221,16 +1234,27 @@ const SearchAndProducts: React.FC = () => {
                 className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="All">All Categories</option>
-                {categories.map((category) => (
+                {Array.from(new Set(products.map(product => product.category))).map((category) => (
                   <option key={category} value={category}>{category}</option>
                 ))}
               </select>
+              {/* Add Refresh Button */}
+              <button
+                onClick={handleRefreshClick}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Refresh Products
+              </button>
             </div>
             <div className="h-[calc(100vh-250px)] overflow-y-auto">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredProducts.length > 0 ? (
                   filteredProducts.map(product => (
-                    <Card key={product.id} className="cursor-pointer hover:shadow-lg transition-shadow duration-300" onClick={() => handleProductClick(product)}>
+                    <Card
+                      key={product.id}
+                      className="cursor-pointer hover:shadow-lg transition-shadow duration-300"
+                      onClick={() => handleProductClick(product)}
+                    >
                       <CardContent className="p-4 flex flex-col items-center text-center">
                         <div className="w-full h-48 relative mb-4">
                           <img
