@@ -1,0 +1,116 @@
+[
+    {
+        "product_id": 1,
+        "reviews": [
+            {
+                "review": "Great product!",
+                "profile_score": 1.0
+            },
+            {
+                "review": "Not bad, but could be improved.",
+                "profile_score": 0.7
+            }
+        ]
+    },
+    {
+        "product_id": 2,
+        "reviews": [
+            {
+                "review": "I hate this product",
+                "profile_score": 1.0
+            },
+            {
+                "review": "Not bad, but could be improved.",
+                "profile_score": 0.7
+            }
+        ]
+    },
+    {
+        "product_id": 3,
+        "reviews": [
+            {
+                "review": "I LOVE this product",
+                "profile_score": 0.2
+            }  
+        ]
+    },
+    {
+        "product_id": 4,
+        "reviews": [
+            {
+                "review": "Not bad",
+                "profile_score": 1.0
+            }
+        ]
+    },
+    {
+        "product_id": 5,
+        "reviews": [
+            {
+                "review": "I absolutely hate this product. it broke.",
+                "profile_score": 0.01
+            }
+            
+        ]
+    },
+    {
+        "product_id": 6,
+        "reviews": [
+            {
+                "review": "I hate this product",
+                "profile_score": 0.9
+            } 
+        ]
+    },
+    {
+        "product_id": 7,
+        "reviews": [
+        {
+            "review": "I didn't like the bike ",
+            "profile_score": 0.7
+        }
+        ]
+    },
+    {
+        "product_id": 8,
+        "product_name": "Cookbook",
+        "reviews": [
+        {
+            "review": "Not bad, but could be improved.",
+            "profile_score": 0.2
+        },
+        {
+            "review":  "I really liked it",
+            "profile_score": 0.6
+        }
+        ]   
+    },
+    {
+        "product_id": 9,
+        "product_name": "Jeans",
+        "reviews": [
+        {
+            "review": "I hate this product",
+            "profile_score": 0.1
+        },
+        {
+            "review":  "Not bad, but could be improved.",
+            "profile_score": 0.6
+        }
+        ]   
+    },
+    {
+        "product_id": 10,
+        "product_name": "Desk Chair",
+        "reviews": [
+            {
+                "review": "I hate this product",
+                "profile_score": 0.08
+            },
+            {
+                "review":  "I didn't like it at all. Do not recommend.",
+                "profile_score": 0.3
+            }
+            ]   
+    } 
+]
