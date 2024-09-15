@@ -10,6 +10,7 @@ document
       const url = activeTab.url;
       console.log(`Current URL: ${url}`);
       var reviews = null;
+      var reviewsContainer = null;
 
       // Send the URL to the Flask server
       try {
@@ -20,8 +21,10 @@ document
 
       // Toggle visibility of the reviews
       if (reviews != null)
-        var reviewsContainer = document.getElementById("reviews-container");
-      else if (
+        reviewsContainer = document.getElementById("reviews-container");
+      else reviewsContainer = document.getElementById("reviews-container");
+
+      if (
         reviewsContainer.style.display === "none" ||
         reviewsContainer.style.display === ""
       ) {
