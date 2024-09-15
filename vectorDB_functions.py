@@ -20,7 +20,7 @@ def update_profile(autoencoder, MLP, profile_id, review: str, product_id):
     latent_profile = response['vectors'][profile_id]["values"]
     embeddings = MLP(review)
     new_latents = latent_profile + embeddings
-    new_profile = autoencoder.decode(latent_profile)
+    new_profile = autoencoder.decode(latent_profile) * 100
     current_metadata = response['vectors'][profile_id]['metadata']
     product_ids = current_metadata["product_ids"]
     product_ids.append(product_id)

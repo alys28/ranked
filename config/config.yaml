@@ -1,13 +1,15 @@
 autoencoder:
-  dims: [128, 64, 32]
-  batch_size: 32
+  encoder_dims: [47, 32, 24, 20, 16, 10]
+  decoder_dims: [10, 16, 20, 24, 32, 47]
   batch_size: 64
-  num_epochs: 100
+  num_epochs: 1000
+  save_dir: "checkpoints/autoencoder"
+  json_file: "data/profiles.json"
 
 MLP:
-  encoder_dims: [512, 256, 128]
-  decoder_dims: [512, 256, 128]
-  delta_files: ""
-  embeddings_file: ""
-  batch_size: 64
+  dims: [384, 256, 128, 64, 32, 16, 10]
+  delta_file: "data/delta.json"
+  embeddings_file: "data/reviews_embedded.json"
+  batch_size: 32
   num_epochs: 100
+  save_dir: "checkpoints/mlp"

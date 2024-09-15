@@ -10,13 +10,12 @@ class ReviewDataset(Dataset):
         '''
         with open(embeddings_file) as embeddings_data:
             self.embeddings = json.load(embeddings_data)
-            embeddings_data.close()
         with open(delta_files) as delta_data:
-            self.deltas = json.loads(delta_data)
-            delta_data.close()
+            self.deltas = json.load(delta_data)
     def __getitem__(self, idx):
-        return torch.tensor(self.embeddings[idx]["embeddings"]), torch.tensor(self.deltas[idx])
+        embed_idx = int(self.deltas[idx]["index"])
+        return torch.tensor(self.embeddings[embed_idx]["embedding"], dtype=torch.float32), torch.tensor(self.deltas[idx]["delta"], dtype=torch.float32)
     def __len__(self):
-        return len(self.embeddings)
+        return len(self.deltas)
 
         

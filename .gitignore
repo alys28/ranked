@@ -1,2 +1,4 @@
 /ml_env
 .env
+checkpoints
+*/__pycache__
