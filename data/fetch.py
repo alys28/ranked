@@ -116,7 +116,7 @@ def generate_reviews():
 
 def generate_resulting_profile(start, end):
     headers = {
-        "Authorization": "sk-tune-IztT9aVZyswtqo3fHyobRRhaxTi31GPn9F8",
+        "Authorization": os.getenv("TUNE_API"),
         "Content-Type": "application/json",
     }
 
