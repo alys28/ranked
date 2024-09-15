@@ -9,7 +9,7 @@ class ReviewDataset(Dataset):
         Will load the embeddings of the reviews, and the delta files (JSON files)
         '''
         with open(embeddings_file) as embeddings_data:
-            self.embeddings = json.loads(embeddings_data)
+            self.embeddings = json.load(embeddings_data)
             embeddings_data.close()
         with open(delta_files) as delta_data:
             self.deltas = json.loads(delta_data)

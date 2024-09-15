@@ -10,17 +10,17 @@ pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
 index = pc.Index("ranked")
 
 
-def update_profile(autoencoder, MLP, profile_id, profile: list, review: str, product_id):
+def update_profile(autoencoder, MLP, profile_id, review: str, product_id):
     '''
     profile: customer profile (not the latents)
     Updates the profile based on the new review
     '''
     review = SBERT_embedding_model.encode(review)
-    latent_profile = autoencoder.encode(profile)
+    response = index.fetch(ids=[profile_id])
+    latent_profile = response['vectors'][profile_id]["values"]
     embeddings = MLP(review)
     new_latents = latent_profile + embeddings
     new_profile = autoencoder.decode(latent_profile)
-    response = index.fetch(ids=[profile_id])
     current_metadata = response['vectors'][profile_id]['metadata']
     product_ids = current_metadata["product_ids"]
     product_ids.append(product_id)
