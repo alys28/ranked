@@ -264,7 +264,7 @@ document
         // Toggle visibility of the reviews
         if (reviews != null) {
           if (document.getElementById("no-reviews").style.display == "none") {
-            populate_reviews();
+            populate_reviews(reviews);
             reviewsContainer = document.getElementById("reviews-container");
           }
           document.getElementById("no-reviews").style.display = "none";
@@ -299,44 +299,7 @@ function getRandomColor() {
   return `#${color}`;
 }
 
-function populate_reviews() {
-  //add reviews param and remove hardcoding
-  const reviews = [
-    {
-      content: "Great extension! It works as expected and is very useful.",
-    },
-    {
-      content:
-        "Another example review. It contains user opinions and experiences.",
-    },
-    {
-      content: "Great extension! It works as expected and is very useful.",
-    },
-    {
-      content:
-        "I love this extension. It makes my work easier and more efficient.",
-    },
-    {
-      content: "Good functionality, but the UI could use some improvements.",
-    },
-    {
-      content:
-        "It's okay. I had some issues with performance on certain pages.",
-    },
-    {
-      content: "Useful tool! I find it very handy for my daily tasks.",
-    },
-    {
-      content: "The extension works well, but it occasionally crashes.",
-    },
-    {
-      content: "Solid extension with great features. Worth installing.",
-    },
-    {
-      content: "Excellent extension. It meets all my needs and more!",
-    },
-  ];
-
+function populate_reviews(reviews) {
   const reviewsContainer = document.getElementById("reviews-container");
   if (reviewsContainer.innerHTML == "") {
     reviews.forEach((review, index) => {

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify # type: ignore
+from flask import Flask, requests, request, jsonify # type: ignore
 from flask_cors import CORS # type: ignore
 from chrome.find_item import check_id
 import urllib.parse
@@ -23,10 +23,14 @@ def get_reviews():
         
         if not link:
             return jsonify({"error": "No link provided :("}), 400
-        reviews = check_id(link)
-        if reviews=="does not exist":
-            reviews = None
-            
+        
+        new_entry = {
+            "name": link,
+            "email": "example@gmail.com"
+        }
+        endpoint_url = 'https://runk-backend.vercel.app/add_product'
+        headers = {'Content-Type': 'application/json'}
+        reviews = requests.post(endpoint_url, json=new_entry, headers=headers)['message']
         return jsonify({"message": reviews}), 200
     
     except Exception as e:
