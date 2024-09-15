@@ -3,6 +3,7 @@ import random
 import os
 from dotenv import load_dotenv
 from groq import Groq
+import requests
 
 load_dotenv()
 
@@ -114,9 +115,11 @@ def generate_reviews():
 
 
 def generate_resulting_profile(start, end):
-    client = Groq(
-        api_key=os.getenv("GROQ_API_KEY"),
-    )
+    headers = {
+        "Authorization": "sk-tune-IztT9aVZyswtqo3fHyobRRhaxTi31GPn9F8",
+        "Content-Type": "application/json",
+    }
+
     try:
         with open('data/profiles.json', 'r') as json_file:
             profiles = json.load(json_file)
@@ -136,31 +139,39 @@ def generate_resulting_profile(start, end):
                     updated = json.load(json_file)
             except FileNotFoundError:
                 updated = {}
-            if profile_pos not in updated:
-                updated[profile_pos] = {}
-            if review_pos not in updated[profile_pos]:
+            if str(profile_pos) not in updated.keys():
+                updated[str(profile_pos)] = {}
+
+            if str(review_pos) not in updated[str(profile_pos)]:
                 query = 'Return only the updated profile json, no explanation text. If a user with the following profile:\n\n' + str(profile) + '\n\nLeaves the following review: ' + reviews[review_pos] + '\n\nWhat information do we get about the profile? Finetune their profile with this information. Do not add/remove any of the fields.'
+
+                data = {
+                    "temperature": 0.9,
+                        "messages":  [
+                        {
+                            "role": "user",
+                            "content": query
+                        }
+                        ],
+                        "model": "meta/llama-3.1-405b-instruct",
+                        "stream": False,
+                        "frequency_penalty":  0.2,
+                        "max_tokens": 10000
+                    }
+                
                 success = False
                 while not success:
                     try:
-                        chat_completion = client.chat.completions.create(
-                            messages=[
-                                {
-                                    "role": "user",
-                                    "content": query,
-                                }
-                            ],
-                            model="llama3-8b-8192",
-                        )
+                        response = json.loads(requests.post("https://proxy.tune.app/chat/completions", headers=headers, json=data).json()['choices'][0]['message']['content'].replace("'", '"'))
                         success = True
                     except Exception as e:
-                        print(f"groq.APIConnectionError. Retrying...")
+                        print(f"Error. Retrying...")
 
-                updated[profile_pos][review_pos] = chat_completion.choices[0].message.content
+                updated[str(profile_pos)][str(review_pos)] = response
 
                 with open('data/updated_profiles.json', 'w') as json_file:
                     json.dump(updated, json_file, indent=4)
                 print('Created updated profile for ' + str(profile_pos) + ' with review ' + str(review_pos))
 
 
-generate_resulting_profile(0, 1000)
+generate_resulting_profile(0, 250)
