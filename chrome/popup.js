@@ -254,14 +254,9 @@ document
       console.log(`Current URL: ${url}`);
 
       try {
-        // Send the URL to the Flask server and wait for the response
         const reviews = await sendToServer(url);
-
-        console.log("The reviews are:", reviews);
-
         let reviewsContainer = null;
 
-        // Toggle visibility of the reviews
         if (reviews != null) {
           if (document.getElementById("no-reviews").style.display == "none") {
             populate_reviews(reviews);
@@ -302,39 +297,34 @@ function getRandomColor() {
 function populate_reviews(reviews) {
   const reviewsContainer = document.getElementById("reviews-container");
   if (reviewsContainer.innerHTML == "") {
-    reviews.forEach((review, index) => {
-      // Create review container div
+    console.log(reviews);
+    reviews.forEach((tuple, index) => {
+      review = tuple[0];
+      // Review container div
       const reviewDiv = document.createElement("div");
       reviewDiv.classList.add("review");
       reviewDiv.id = `review${index + 1}`;
 
-      // Create review author div
+      // Review author div
       const reviewAuthorDiv = document.createElement("div");
       reviewAuthorDiv.classList.add("review-author");
       reviewAuthorDiv.id = `review-author${index + 1}`;
 
-      // Create profile circle div
+      // Profile image div
       const name = names[Math.floor(Math.random() * names.length)];
       const profileCircleDiv = document.createElement("div");
       profileCircleDiv.classList.add("profile-circle");
       profileCircleDiv.innerText = name.charAt(0); // First letter of the author
       profileCircleDiv.style.backgroundColor = getRandomColor(); // Set random background color
 
-      // Append the profile circle and author name to the review author div
       reviewAuthorDiv.appendChild(profileCircleDiv);
       reviewAuthorDiv.appendChild(document.createTextNode(name));
-
-      // Create review content div
       const reviewContentDiv = document.createElement("div");
       reviewContentDiv.classList.add("review-content");
       reviewContentDiv.id = `review-content${index + 1}`;
-      reviewContentDiv.innerText = review.content;
-
-      // Append author and content to review div
+      reviewContentDiv.innerText = review;
       reviewDiv.appendChild(reviewAuthorDiv);
       reviewDiv.appendChild(reviewContentDiv);
-
-      // Append the review to the container
       reviewsContainer.appendChild(reviewDiv);
     });
   }
@@ -346,21 +336,17 @@ function sendToServer(link) {
     var baseUrl = "http://127.0.0.1:5000/";
     var params = "?link=" + encodeURIComponent(link);
 
-    // Open a GET request with the composed URL
     xhr.open("GET", baseUrl + params, true);
-
-    // Send the request
     xhr.send();
-
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) {
         if (xhr.status != 200) {
           console.error("Error:", xhr.status, xhr.statusText);
-          reject(xhr.statusText); // Reject the promise if there's an error
+          reject(xhr.statusText);
         } else {
           console.log("Success:", xhr.responseText);
-          const reviews = JSON.parse(xhr.responseText).message;
-          resolve(reviews); // Resolve the promise with the reviews
+          let reviews = JSON.parse(xhr.responseText).message;
+          resolve(reviews);
         }
       }
     };
@@ -376,11 +362,91 @@ document.getElementById("submit-review").addEventListener("click", () => {
 document.getElementById("submit-review-form").addEventListener("click", () => {
   const reviewText = document.getElementById("review-text").value;
   if (reviewText) {
-    // For demonstration purposes, we'll just log the review text to the console.
-    console.log("Review submitted:", reviewText);
-    // Optionally, you could add the new review to the reviews container here.
-    // Reset form
+    sendReviewInfo(reviewText);
     document.getElementById("review-text").value = "";
     document.getElementById("review-form").style.display = "none"; // Hide the form after submission
   }
 });
+
+// function getEmailFromServer() {
+//   return new Promise((resolve, reject) => {
+//     var xhr = new XMLHttpRequest();
+//     var baseUrl = "http://127.0.0.1:5000/email";
+//     xhr.open("GET", baseUrl, true);
+//     xhr.send();
+//     xhr.onreadystatechange = function () {
+//       if (xhr.readyState == 4) {
+//         if (xhr.status != 200) {
+//           console.error("Error:", xhr.status, xhr.statusText);
+//           reject(xhr.statusText);
+//         } else {
+//           try {
+//             const response = JSON.parse(xhr.responseText);
+//             resolve(response.message);
+//           } catch (e) {
+//             reject("Invalid JSON response");
+//           }
+//         }
+//       }
+//     };
+//   });
+// }
+
+async function sendReviewInfo(reviewText) {
+  let emailString = null;
+  let urlString = null;
+
+  let value = "; " + document.cookie;
+  let parts = value.split("; " + name + "=");
+  if (parts.length === 2)
+    emailString = parts.pop().split(";").shift().textContent =
+      cookieValue || null;
+
+  // try {
+  //   emailString = await getEmailFromServer();
+  // } catch (error) {
+  //   console.error("Failed to fetch email:", error);
+  // }
+
+  const [activeTab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  if (activeTab) urlString = activeTab.url;
+  console.log(urlString);
+
+  const base = "https://www.amazon.ca/";
+  const dpSegment = "/dp/";
+  urlString = urlString.substring(
+    urlString.indexOf(base) + base.length,
+    urlString.indexOf(dpSegment)
+  );
+
+  var reviewInfo = {
+    email: emailString.trim(),
+    review: reviewText,
+    url: urlString,
+  };
+
+  const endpointUrl = "https://runk-backend.vercel.app/add_product";
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  async function sendData() {
+    try {
+      const response = await fetch(endpointUrl, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(reviewInfo),
+      });
+      const data = await response.json();
+      const reviews = data.message || null;
+      console.log(reviews);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+  console.log(reviewInfo);
+  sendData();
+}

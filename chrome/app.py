@@ -1,6 +1,7 @@
-from flask import Flask, requests, request, jsonify # type: ignore
+from flask import Flask, request, jsonify # type: ignore
+import requests  # type: ignore
+import os
 from flask_cors import CORS # type: ignore
-from chrome.find_item import check_id
 import urllib.parse
 
 app = Flask(__name__)
@@ -25,16 +26,35 @@ def get_reviews():
             return jsonify({"error": "No link provided :("}), 400
         
         new_entry = {
-            "name": link,
-            "email": "example@gmail.com"
+            "product_name": link
         }
-        endpoint_url = 'https://runk-backend.vercel.app/add_product'
+        endpoint_url = "https://runk-backend.vercel.app/add_product"
         headers = {'Content-Type': 'application/json'}
-        reviews = requests.post(endpoint_url, json=new_entry, headers=headers)['message']
+        try:
+            reviews = requests.post(endpoint_url, json=new_entry, headers=headers)['message']
+        except:
+            reviews = None
         return jsonify({"message": reviews}), 200
     
     except Exception as e:
         return jsonify({"Error:": str(e)}), 500
+
+# @app.route('/email', methods=['GET'])
+# def get_email():
+#     try:
+#         print(get_email())
+#         return jsonify({"message": get_email()}), 200
+#     except Exception as e:
+#         return jsonify({"Error:": str(e)}), 500
+
+# def get_email():
+#     desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
+#     file_name = 'runk.txt'
+#     file_path = os.path.join(desktop_path, file_name)
+#     if os.path.isfile(file_path):
+#         with open(file_path, 'r') as file:
+#             content = file.read()
+#         return content
 
 if __name__ == '__main__':
     app.run(debug=False)
