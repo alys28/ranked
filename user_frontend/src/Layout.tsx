@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { GetStartedDialog } from "@/GetStarted/GetStartedDialog";
 
+
 export function Layout({
   menu,
   children,

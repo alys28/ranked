@@ -6,77 +6,33 @@ interface Product {
   description: string;
   link: string;
   photoUrl: string;
+  category: string; // Add category field
 }
 
 const products: Product[] = [
-  {
-    id: 1,
-    name: 'Product 1',
-    description: 'Description for Product 1',
-    link: 'https://example.com/product1',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 2,
-    name: 'Product 2',
-    description: 'Description for Product 2',
-    link: 'https://example.com/product2',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 3,
-    name: 'Product 3',
-    description: 'Description for Product 3',
-    link: 'https://example.com/product3',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 4,
-    name: 'Product 4',
-    description: 'Description for Product 4',
-    link: 'https://example.com/product4',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 5,
-    name: 'Product 5',
-    description: 'Description for Product 5',
-    link: 'https://example.com/product5',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 6,
-    name: 'Product 6',
-    description: 'Description for Product 6',
-    link: 'https://example.com/product6',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 7,
-    name: 'Product 7',
-    description: 'Description for Product 7',
-    link: 'https://example.com/product7',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 8,
-    name: 'Product 8',
-    description: 'Description for Product 8',
-    link: 'https://example.com/product8',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 8,
-    name: 'Product 8',
-    description: 'Description for Product 8',
-    link: 'https://example.com/product8',
-    photoUrl: 'https://via.placeholder.com/150',
-  },
+  { id: 1, name: 'Product 1', description: 'Description for Product 1', link: 'https://example.com/product1', photoUrl: 'https://via.placeholder.com/150', category: 'Category 1' },
+  { id: 2, name: 'Product 2', description: 'Description for Product 2', link: 'https://example.com/product2', photoUrl: 'https://via.placeholder.com/150', category: 'Category 2' },
+  { id: 3, name: 'Product 3', description: 'Description for Product 3', link: 'https://example.com/product3', photoUrl: 'https://via.placeholder.com/150', category: 'Category 1' },
+  { id: 4, name: 'Product 4', description: 'Description for Product 4', link: 'https://example.com/product4', photoUrl: 'https://via.placeholder.com/150', category: 'Category 3' },
+  { id: 5, name: 'Product 5', description: 'Description for Product 5', link: 'https://example.com/product5', photoUrl: 'https://via.placeholder.com/150', category: 'Category 2' },
+  { id: 6, name: 'Product 6', description: 'Description for Product 6', link: 'https://example.com/product6', photoUrl: 'https://via.placeholder.com/150', category: 'Category 3' },
+  { id: 7, name: 'Product 7', description: 'Description for Product 7', link: 'https://example.com/product7', photoUrl: 'https://via.placeholder.com/150', category: 'Category 1' },
+  { id: 8, name: 'Product 8', description: 'Description for Product 8', link: 'https://example.com/product8', photoUrl: 'https://via.placeholder.com/150', category: 'Category 2' },
   // Add more products as needed
 ];
 
+const categories = Array.from(new Set(products.map(product => product.category)));
+
 const SearchAndProducts: React.FC = () => {
   const [query, setQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const filteredProducts = products.filter(product => {
+    return (
+      (selectedCategory === 'All' || product.category === selectedCategory) &&
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+  });
 
   const handleClick = (link: string) => {
     window.location.href = link;
@@ -94,8 +50,20 @@ const SearchAndProducts: React.FC = () => {
         />
         <button style={styles.button}>Search</button>
       </div>
+      <div style={styles.filterContainer}>
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          style={styles.select}
+        >
+          <option value="All">All Categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>{category}</option>
+          ))}
+        </select>
+      </div>
       <div style={styles.productListContainer}>
-        {products.map(product => (
+        {filteredProducts.map(product => (
           <div
             key={product.id}
             style={styles.productCard}
@@ -155,6 +123,15 @@ const styles = {
     cursor: 'pointer',
     borderRadius: '0 24px 24px 0',
     transition: 'background-color 0.3s ease',
+  },
+  filterContainer: {
+    marginTop: '1em',
+  },
+  select: {
+    padding: '8px 16px',
+    fontSize: '16px',
+    borderRadius: '8px',
+    border: '1px solid #ddd',
   },
   productListContainer: {
     marginTop: '3em',

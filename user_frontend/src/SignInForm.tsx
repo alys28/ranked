@@ -16,7 +16,7 @@ export function SignInForm() {
             Welcome to ranked
           </h1>
           <p className="text-sm text-gray-500 mt-2">
-            Your gateway to a better consumerism experience
+            Your gateway to a better consumer experience
           </p>
         </div>
 
