@@ -392,21 +392,34 @@ document.getElementById("submit-review-form").addEventListener("click", () => {
 //   });
 // }
 
+// function setCookie(name, value, days) {
+//   let expires = "";
+//   if (days) {
+//     const date = new Date();
+//     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+//     expires = "; expires=" + date.toUTCString();
+//   }
+//   document.cookie = name + "=" + (value || "") + expires + "; path=/";
+// }
+
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    let c = cookies[i];
+    while (c.charAt(0) === " ") c = c.substring(1, c.length); // Remove leading spaces
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
 async function sendReviewInfo(reviewText) {
-  let emailString = null;
   let urlString = null;
 
-  let value = "; " + document.cookie;
-  let parts = value.split("; " + name + "=");
-  if (parts.length === 2)
-    emailString = parts.pop().split(";").shift().textContent =
-      cookieValue || null;
-
-  // try {
-  //   emailString = await getEmailFromServer();
-  // } catch (error) {
-  //   console.error("Failed to fetch email:", error);
-  // }
+  //store
+  // setCookie("email", "PearlNnatalia@gmail.com", 7); // Stores "JohnDoe" for 7 days
+  let emailString = "pearlnnatalia@gmail.com";
+  // getCookie("email").trim();
 
   const [activeTab] = await chrome.tabs.query({
     active: true,
@@ -423,12 +436,12 @@ async function sendReviewInfo(reviewText) {
   );
 
   var reviewInfo = {
-    email: emailString.trim(),
-    review: reviewText,
-    url: urlString,
+    user_email: emailString.trim(),
+    review_text: reviewText,
+    product_name: urlString,
   };
 
-  const endpointUrl = "https://runk-backend.vercel.app/add_product";
+  const endpointUrl = "https://runk-backend.vercel.app/user_review";
   const headers = {
     "Content-Type": "application/json",
   };

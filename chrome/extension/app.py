@@ -6,6 +6,8 @@ import urllib.parse
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, origins=["chrome-extension://koncaljepgibdofflmbomffmhhbkfmec"])
+
 
 def extract_between(url):
     base = 'https://www.amazon.ca/'
@@ -30,10 +32,13 @@ def get_reviews():
         }
         endpoint_url = "https://runk-backend.vercel.app/add_product"
         headers = {'Content-Type': 'application/json'}
-        try:
-            reviews = requests.post(endpoint_url, json=new_entry, headers=headers)['message']
-        except:
-            reviews = None
+        # try:
+        #     reviews = requests.post(endpoint_url, json=new_entry, headers=headers)['message']
+        # except:
+        #     reviews = None
+        reviews = [('Amazing shoes for Pilates! Perfect for everyday fitness.',5),('I wear them to my office job every day, they’ve been very reliable!',8),
+                   ('Amazing for morning walks & roughing it with the kids at camp!',8),('Shoes are terrible!! Wore down after TWO adventure hike trails. ',8),
+                   ('Perfect for my commute.',8)]
         return jsonify({"message": reviews}), 200
     
     except Exception as e:
